@@ -4,29 +4,24 @@ public class PolishNotation {
     public int evalRPN(String[] tokens) {
         // define variables.
         HashSet<String> operands = new HashSet<>(Arrays.asList("+", "-", "*", "/"));
-        HashMap<Integer, Integer> encoder = new HashMap<>();       // encoder : total. 
         Stack<Integer> s = new Stack<>();
 
         // go through tokens.
         for(int i = 0; i < tokens.length; i++) {
             // check if it's an operand or not.
             if(operands.contains(tokens[i]) && !s.isEmpty()) {
-                int num2 = encoder.get(s.pop());
-                int num1 = encoder.get(s.pop());
-                int total_num = evalRPNHelper(num1, num2, tokens[i]);
+                int num2 = s.pop();
                 // update hashmap + stack.
-                encoder.put(i,total_num);
-                s.push(i);
+                s.push(evalRPNHelper(s.pop(), num2, tokens[i]));
             }
 
             // check if it's a "number"
             else if(!operands.contains(tokens[i])) {
-                encoder.put(i, Integer.parseInt(tokens[i])); 
-                s.push(i);
+                s.push(Integer.parseInt(tokens[i]));
             }
         }
         
-        return encoder.get(s.pop());
+        return s.pop();
     }
 
     public int evalRPNHelper(int a, int b, String operator) {

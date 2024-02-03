@@ -4,7 +4,6 @@
   * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
  */
 
-package DP;
 
 import java.util.ArrayList;
 import java.util.List;
